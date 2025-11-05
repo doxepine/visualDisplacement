@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.ssck.visual_displacement.Mapper.ConfigurationMapper">
+    <update id="initSystem">
+        -- 清空所有表数据
+        TRUNCATE TABLE [dbo].[displacement];
+        TRUNCATE TABLE [dbo].[record];
+        TRUNCATE TABLE [dbo].[aruco];
+        DELETE
+        FROM [dbo].[camera];
+        DELETE
+        FROM [dbo].[config];
+
+        -- 重置camera表的自增标识
+        DBCC
+            CHECKIDENT ([dbo].[camera], RESEED, 0);
+
+        -- 插入默认配置数据
+        INSERT INTO [dbo].[config] (id, background_image, backend_refresh_time, frontend_refresh_time)
+        VALUES (1, NULL, NULL, NULL);
+    </update>
+</mapper>
